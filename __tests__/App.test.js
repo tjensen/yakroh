@@ -1,9 +1,10 @@
 import React from 'react';
+import TestRenderer from 'react-test-renderer';
 import App from '../App';
+import PlayArea from '../app/components/PlayArea';
 
-import renderer from 'react-test-renderer';
-
-it('renders without crashing', () => {
-  const rendered = renderer.create(<App />).toJSON();
-  expect(rendered).toBeTruthy();
+it('renders correctly', () => {
+  const renderer = TestRenderer.create(<App />);
+  const playArea = renderer.root.findByType(PlayArea);
+  expect(playArea).toBeTruthy();
 });
