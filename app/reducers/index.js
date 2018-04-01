@@ -12,12 +12,17 @@ import {
   allDifferent,
   yakroh
 } from '../yakroh';
+import {
+  RED, BLUE, GREEN,
+  SOLID, HALF, CLEAR
+} from '../colors';
+import { CIRCLE, SQUARE, TRIANGLE } from '../shapes';
 
 function allTiles() {
   let tiles = [];
-  ['CIRCLE', 'SQUARE', 'STAR'].forEach((shape) => {
-    ['RED', 'GREEN', 'BLUE'].forEach((color) => {
-      ['SOLID', 'HALF', 'CLEAR'].forEach((fill) => {
+  [CIRCLE, SQUARE, TRIANGLE].forEach((shape) => {
+    [RED, GREEN, BLUE].forEach((color) => {
+      [SOLID, HALF, CLEAR].forEach((fill) => {
         [1, 2, 3].forEach((quantity) => {
           tiles.push({shape, color, fill, quantity});
         });

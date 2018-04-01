@@ -6,6 +6,10 @@ import {
   TouchableHighlight,
   View
 } from 'react-native';
+import { CIRCLE, SQUARE, TRIANGLE } from '../shapes';
+import Circle from './Circle';
+import Square from './Square';
+import Triangle from './Triangle';
 
 class Tile extends React.Component {
   render() {
@@ -44,9 +48,15 @@ class Tile extends React.Component {
       >
         {tile ? (
           <View testID={'tileContainer'} style={styles.container}>
-            <Text style={styles.text}>{tile.color}</Text>
-            <Text style={styles.text}>{tile.fill}</Text>
-            <Text style={styles.text}>{tile.shape}</Text>
+            {tile.shape === CIRCLE && (
+              <Circle width={50} height={50} color={tile.color} fill={tile.fill} />
+            )}
+            {tile.shape === SQUARE && (
+              <Square width={50} height={50} color={tile.color} fill={tile.fill} />
+            )}
+            {tile.shape === TRIANGLE && (
+              <Triangle width={50} height={50} color={tile.color} fill={tile.fill} />
+            )}
             <Text style={styles.text}>{tile.quantity}</Text>
           </View>
         ) : (
