@@ -7,6 +7,11 @@ import {
   UNSELECT_TILE,
   REQUEST_TILES
 } from '../actions/types';
+import {
+  allTheSame,
+  allDifferent,
+  yakroh
+} from '../yakroh';
 
 function allTiles() {
   let tiles = [];
@@ -67,34 +72,6 @@ function dealTile(state, action) {
     default:
       return state;
   }
-}
-
-function allTheSame(items) {
-  const result = (1 === new Set(items).size);
-  return result;
-}
-
-function allDifferent(items) {
-  const result = (items.length === new Set(items).size);
-  return result;
-}
-
-function yakroh(selectedTiles) {
-  const colors = selectedTiles.map((tile) => tile.color);
-  const shapes = selectedTiles.map((tile) => tile.shape);
-  const quantities = selectedTiles.map((tile) => tile.quantity);
-
-  if (!allTheSame(colors) && !allDifferent(colors)) {
-    return false;
-  }
-  if (!allTheSame(shapes) && !allDifferent(shapes)) {
-    return false;
-  }
-  if (!allTheSame(quantities) && !allDifferent(quantities)) {
-    return false;
-  }
-
-  return true;
 }
 
 function selectTile(state, action) {
