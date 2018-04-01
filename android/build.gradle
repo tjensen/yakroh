@@ -22,3 +22,17 @@ allprojects {
         }
     }
 }
+
+ext {
+    buildToolsVersion = "27.0.3"
+}
+
+subprojects { subproject ->
+    afterEvaluate {
+        if ((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
+            android {
+                buildToolsVersion rootProject.ext.buildToolsVersion
+            }
+        }
+    }
+}
