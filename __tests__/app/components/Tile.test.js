@@ -15,6 +15,7 @@ const mockStore = createMockStore(middlewares);
 describe('A Tile', () => {
   const item = {
     color: 'R',
+    fill: 'S',
     shape: 'O',
     quantity: 1
   };
@@ -29,10 +30,11 @@ describe('A Tile', () => {
       <Tile position={0} tile={item}/>
     );
     const texts = renderer.root.findAllByType(Text);
-    expect(texts).toHaveLength(3);
+    expect(texts).toHaveLength(4);
     expect(texts[0].props.children).toEqual('R');
-    expect(texts[1].props.children).toEqual('O');
-    expect(texts[2].props.children).toEqual(1);
+    expect(texts[1].props.children).toEqual('S');
+    expect(texts[2].props.children).toEqual('O');
+    expect(texts[3].props.children).toEqual(1);
   });
 
   it('renders correctly when not selected', () => {

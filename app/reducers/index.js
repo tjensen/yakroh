@@ -17,8 +17,10 @@ function allTiles() {
   let tiles = [];
   ['CIRCLE', 'SQUARE', 'STAR'].forEach((shape) => {
     ['RED', 'GREEN', 'BLUE'].forEach((color) => {
-      [1, 2, 3].forEach((quantity) => {
-        tiles.push({shape, color, quantity});
+      ['SOLID', 'HALF', 'CLEAR'].forEach((fill) => {
+        [1, 2, 3].forEach((quantity) => {
+          tiles.push({shape, color, fill, quantity});
+        });
       });
     });
   });

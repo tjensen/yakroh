@@ -45,6 +45,7 @@ class Tile extends React.Component {
         {tile ? (
           <View testID={'tileContainer'} style={styles.container}>
             <Text style={styles.text}>{tile.color}</Text>
+            <Text style={styles.text}>{tile.fill}</Text>
             <Text style={styles.text}>{tile.shape}</Text>
             <Text style={styles.text}>{tile.quantity}</Text>
           </View>

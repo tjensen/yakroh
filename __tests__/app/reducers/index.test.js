@@ -19,8 +19,8 @@ describe('Reducer', () => {
   it('returns initial state', () => {
     expect(initialState.placedTiles).toHaveLength(12);
     expect(initialState.placedTiles.every((e) => e === null)).toBe(true);
-    expect(initialState.pendingTiles).toHaveLength(27);
-    expect(new Set(initialState.pendingTiles).size).toBe(27);
+    expect(initialState.pendingTiles).toHaveLength(81);
+    expect(new Set(initialState.pendingTiles).size).toBe(81);
     expect(initialState.removedTiles).toEqual([]);
     expect(initialState.score).toBe(0);
     expect(initialState.message).toBe('');
@@ -36,7 +36,7 @@ describe('Reducer', () => {
   describe('for shuffle', () => {
     it('returns state with randomized pending tiles', () => {
       const state = reducers(undefined, shuffle());
-      expect(state.pendingTiles).toHaveLength(27);
+      expect(state.pendingTiles).toHaveLength(81);
       expect(state.pendingTiles).not.toEqual(initialState.pendingTiles);
       for (tile of initialState.pendingTiles) {
         expect(state.pendingTiles).toContainEqual(tile);
@@ -47,7 +47,7 @@ describe('Reducer', () => {
   describe('for dealTile', () => {
     it('moves tile from pendingTiles to position in placedTiles', () => {
       const state = reducers(initialState, dealTile(4));
-      expect(state.pendingTiles).toHaveLength(26);
+      expect(state.pendingTiles).toHaveLength(80);
       expect(state.pendingTiles).not.toContainEqual(initialState.pendingTiles[0]);
       expect(state.placedTiles[4]).toEqual(initialState.pendingTiles[0]);
     });
