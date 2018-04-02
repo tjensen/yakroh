@@ -13,7 +13,7 @@ describe('Reducer', () => {
   let initialState;
 
   beforeEach(() => {
-    initialState = reducers(undefined, {});
+    initialState = JSON.parse(JSON.stringify(reducers(undefined, {})));
   });
 
   it('returns initial state', () => {
@@ -94,6 +94,12 @@ describe('Reducer', () => {
       describe('and selected tile completes yakroh', () => {
         beforeEach(() => {
           initialState.placedTiles[7] = initialState.pendingTiles.shift();
+          initialState.placedTiles[0] = initialState.pendingTiles.shift();
+          initialState.placedTiles[1] = initialState.pendingTiles.shift();
+          initialState.placedTiles[2] = initialState.pendingTiles.shift();
+          initialState.placedTiles[4] = initialState.pendingTiles.shift();
+          initialState.placedTiles[6] = initialState.pendingTiles.shift();
+          initialState.placedTiles[8] = initialState.pendingTiles.shift();
         });
 
         it('clears selectedTiles, increases score, clears message, removes selected tiles, and deals new tiles', () => {
@@ -115,6 +121,42 @@ describe('Reducer', () => {
             placedTiles: placedTiles
           }));
         });
+
+        describe('and 12 tiles are placed', () => {
+          beforeEach(() => {
+            initialState.placedTiles[0] = initialState.pendingTiles.shift();
+            initialState.placedTiles[1] = initialState.pendingTiles.shift();
+            initialState.placedTiles[2] = initialState.pendingTiles.shift();
+            initialState.placedTiles[4] = initialState.pendingTiles.shift();
+            initialState.placedTiles[6] = initialState.pendingTiles.shift();
+            initialState.placedTiles[8] = initialState.pendingTiles.shift();
+            initialState.placedTiles[9] = initialState.pendingTiles.shift();
+            initialState.placedTiles[10] = initialState.pendingTiles.shift();
+            initialState.placedTiles[11] = initialState.pendingTiles.shift();
+          });
+
+          it('shifts remaining tiles into first nine positions and does not deal more tiles', () => {
+            const state = reducers(initialState, selectTile(7));
+            const placedTiles = initialState.placedTiles.slice();
+            placedTiles[3] = initialState.placedTiles[9];
+            placedTiles[5] = initialState.placedTiles[10];
+            placedTiles[7] = initialState.placedTiles[11];
+            placedTiles[9] = null;
+            placedTiles[10] = null;
+            placedTiles[11] = null;
+            expect(state).toEqual(Object.assign({}, initialState, {
+              selectedTiles: [],
+              message: 'Yakroh!',
+              score: 1,
+              removedTiles: [
+                initialState.placedTiles[3],
+                initialState.placedTiles[5],
+                initialState.placedTiles[7]
+              ],
+              placedTiles
+            }));
+          });
+        });
       });
 
       describe('and selected tile does not complete yakroh', () => {
@@ -122,7 +164,7 @@ describe('Reducer', () => {
           initialState.placedTiles[2] = initialState.pendingTiles.pop();
         });
 
-        it('cleas selectedTiles, decreases score, and sets message', () => {
+        it('clears selectedTiles, decreases score, and sets message', () => {
           const state = reducers(initialState, selectTile(2));
           expect(state).toEqual(Object.assign({}, initialState, {
             selectedTiles: [],
@@ -149,6 +191,9 @@ describe('Reducer', () => {
   describe('for requestTiles', () => {
     beforeEach(() => {
       initialState.message = 'something';
+      for (let position = 0; position < 9; position++) {
+        initialState.placedTiles[position] = initialState.pendingTiles.shift();
+      }
     });
 
     describe('when rightmost column contains no tiles', () => {

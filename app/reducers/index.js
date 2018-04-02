@@ -81,6 +81,23 @@ function dealTile(state, action) {
   }
 }
 
+function _swapTiles(tiles, pos1, pos2) {
+  [tiles[pos1], tiles[pos2]] = [tiles[pos2], tiles[pos1]];
+}
+
+function _compactTiles(tiles) {
+  let spare = 9;
+  for (let position = 0; position < 9; position++) {
+    if (tiles[position] === null) {
+      _swapTiles(tiles, position, spare);
+      spare++;
+      if (spare > 11) {
+        return
+      }
+    }
+  }
+}
+
 function selectTile(state, action) {
   switch (action.type) {
     case SELECT_TILE:
@@ -93,9 +110,17 @@ function selectTile(state, action) {
           removedTiles.push(placedTiles[selectedTiles[0]]);
           removedTiles.push(placedTiles[selectedTiles[1]]);
           removedTiles.push(placedTiles[selectedTiles[2]]);
-          placedTiles[selectedTiles[0]] = pendingTiles.shift();
-          placedTiles[selectedTiles[1]] = pendingTiles.shift();
-          placedTiles[selectedTiles[2]] = pendingTiles.shift();
+          placedTiles[selectedTiles[0]] = null;
+          placedTiles[selectedTiles[1]] = null;
+          placedTiles[selectedTiles[2]] = null;
+          _swapTiles(placedTiles, selectedTiles[0], 9);
+          _swapTiles(placedTiles, selectedTiles[1], 10);
+          _swapTiles(placedTiles, selectedTiles[2], 11);
+          for (let position = 0; position < 9; position++) {
+            if (placedTiles[position] === null) {
+              placedTiles[position] = pendingTiles.shift();
+            }
+          }
           return Object.assign({}, state, {
             message: 'Yakroh!',
             score: state.score + 1,
