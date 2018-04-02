@@ -137,9 +137,17 @@ function unselectTile(state, action) {
 function requestTiles(state, action) {
   switch (action.type) {
     case REQUEST_TILES:
+      const placedTiles = state.placedTiles.slice();
+      const pendingTiles = state.pendingTiles.slice();
+      for (let position = 9; position < 12; position++) {
+        if (!placedTiles[position]) {
+          placedTiles[position] = pendingTiles.shift();
+        }
+      }
       return Object.assign({}, state, {
-        message: 'Not right now',
-        score: state.score - 1
+        placedTiles,
+        pendingTiles,
+        message: ''
       });
     default:
       return state;

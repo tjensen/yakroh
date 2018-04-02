@@ -147,12 +147,39 @@ describe('Reducer', () => {
   });
 
   describe('for requestTiles', () => {
-    it('decreases score and sets message', () => {
-      const state = reducers(initialState, requestTiles());
-      expect(state).toEqual(Object.assign({}, initialState, {
-        score: -1,
-        message: 'Not right now'
-      }));
+    beforeEach(() => {
+      initialState.message = 'something';
+    });
+
+    describe('when rightmost column contains no tiles', () => {
+      it('places tiles in the rightmost column and clears message', () => {
+        const state = reducers(initialState, requestTiles());
+        const placedTiles = initialState.placedTiles.slice();
+        const pendingTiles = initialState.pendingTiles.slice();
+        placedTiles[9] = pendingTiles.shift();
+        placedTiles[10] = pendingTiles.shift();
+        placedTiles[11] = pendingTiles.shift();
+        expect(state).toEqual(Object.assign({}, initialState, {
+          placedTiles,
+          pendingTiles,
+          message: ''
+        }));
+      });
+    });
+
+    describe('when rightmost column contains tiles', () => {
+      beforeEach(() => {
+        initialState.placedTiles[9] = initialState.pendingTiles.shift();
+        initialState.placedTiles[10] = initialState.pendingTiles.shift();
+        initialState.placedTiles[11] = initialState.pendingTiles.shift();
+      });
+
+      it('clears message', () => {
+        const state = reducers(initialState, requestTiles());
+        expect(state).toEqual(Object.assign({}, initialState, {
+          message: ''
+        }));
+      });
     });
   });
 });
