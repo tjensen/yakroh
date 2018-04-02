@@ -6,6 +6,7 @@ import {
   SOLID, HALF, CLEAR,
   fillColor
 } from '../../../app/colors';
+import { STROKE_WIDTH } from '../../../app/shapes';
 import Triangle from '../../../app/components/Triangle';
 
 describe('A Triangle', () => {
@@ -20,7 +21,7 @@ describe('A Triangle', () => {
     const polygon = svg.findByType(Polygon);
     expect(polygon.props.points).toBe('50,5 95,95 5,95');
     expect(polygon.props.stroke).toBe(RED);
-    expect(polygon.props.strokeWidth).toBe(2);
+    expect(polygon.props.strokeWidth).toBe(STROKE_WIDTH);
     expect(polygon.props.fill).toBe(fillColor(SOLID, RED));
   });
 
@@ -35,7 +36,7 @@ describe('A Triangle', () => {
     const polygon = svg.findByType(Polygon);
     expect(polygon.props.points).toBe('50,5 95,95 5,95');
     expect(polygon.props.stroke).toBe(GREEN);
-    expect(polygon.props.strokeWidth).toBe(2);
+    expect(polygon.props.strokeWidth).toBe(STROKE_WIDTH);
     expect(polygon.props.fill).toBe(fillColor(HALF, GREEN));
   });
 
@@ -50,7 +51,7 @@ describe('A Triangle', () => {
     const polygon = svg.findByType(Polygon);
     expect(polygon.props.points).toBe('50,5 95,95 5,95');
     expect(polygon.props.stroke).toBe(BLUE);
-    expect(polygon.props.strokeWidth).toBe(2);
+    expect(polygon.props.strokeWidth).toBe(STROKE_WIDTH);
     expect(polygon.props.fill).toBe(fillColor(CLEAR, BLUE));
   });
 });

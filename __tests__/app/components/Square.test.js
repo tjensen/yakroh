@@ -6,6 +6,7 @@ import {
   SOLID, HALF, CLEAR,
   fillColor
 } from '../../../app/colors';
+import { STROKE_WIDTH } from '../../../app/shapes';
 import Square from '../../../app/components/Square';
 
 describe('A Square', () => {
@@ -23,7 +24,7 @@ describe('A Square', () => {
     expect(rect.props.width).toBe(90);
     expect(rect.props.height).toBe(90);
     expect(rect.props.stroke).toBe(RED);
-    expect(rect.props.strokeWidth).toBe(2);
+    expect(rect.props.strokeWidth).toBe(STROKE_WIDTH);
     expect(rect.props.fill).toBe(fillColor(SOLID, RED));
   });
 
@@ -41,7 +42,7 @@ describe('A Square', () => {
     expect(rect.props.width).toBe(90);
     expect(rect.props.height).toBe(90);
     expect(rect.props.stroke).toBe(GREEN);
-    expect(rect.props.strokeWidth).toBe(2);
+    expect(rect.props.strokeWidth).toBe(STROKE_WIDTH);
     expect(rect.props.fill).toBe(fillColor(HALF, GREEN));
   });
 
@@ -59,7 +60,7 @@ describe('A Square', () => {
     expect(rect.props.width).toBe(90);
     expect(rect.props.height).toBe(90);
     expect(rect.props.stroke).toBe(BLUE);
-    expect(rect.props.strokeWidth).toBe(2);
+    expect(rect.props.strokeWidth).toBe(STROKE_WIDTH);
     expect(rect.props.fill).toBe(fillColor(CLEAR, BLUE));
   });
 });

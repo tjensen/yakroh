@@ -5,6 +5,7 @@ import {
   SOLID, HALF, CLEAR,
   fillColor
 } from '../colors';
+import { STROKE_WIDTH } from '../shapes';
 
 class Triangle extends React.Component {
   render() {
@@ -19,7 +20,7 @@ class Triangle extends React.Component {
         <Polygon
           points={'50,5 95,95 5,95'}
           stroke={color}
-          strokeWidth={2}
+          strokeWidth={STROKE_WIDTH}
           fill={fillColor(fill, color)}
         />
       </Svg>

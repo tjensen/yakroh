@@ -6,6 +6,7 @@ import {
   SOLID, HALF, CLEAR,
   fillColor
 } from '../../../app/colors';
+import { STROKE_WIDTH } from '../../../app/shapes';
 import Circle from '../../../app/components/Circle';
 
 describe('A Circle', () => {
@@ -22,7 +23,7 @@ describe('A Circle', () => {
     expect(svgCircle.props.cy).toBe(50);
     expect(svgCircle.props.r).toBe(45);
     expect(svgCircle.props.stroke).toBe(RED);
-    expect(svgCircle.props.strokeWidth).toBe(2);
+    expect(svgCircle.props.strokeWidth).toBe(STROKE_WIDTH);
     expect(svgCircle.props.fill).toBe(fillColor(SOLID, RED));
   });
 
@@ -39,7 +40,7 @@ describe('A Circle', () => {
     expect(svgCircle.props.cy).toBe(50);
     expect(svgCircle.props.r).toBe(45);
     expect(svgCircle.props.stroke).toBe(GREEN);
-    expect(svgCircle.props.strokeWidth).toBe(2);
+    expect(svgCircle.props.strokeWidth).toBe(STROKE_WIDTH);
     expect(svgCircle.props.fill).toBe(fillColor(HALF, GREEN));
   });
 
@@ -56,7 +57,7 @@ describe('A Circle', () => {
     expect(svgCircle.props.cy).toBe(50);
     expect(svgCircle.props.r).toBe(45);
     expect(svgCircle.props.stroke).toBe(BLUE);
-    expect(svgCircle.props.strokeWidth).toBe(2);
+    expect(svgCircle.props.strokeWidth).toBe(STROKE_WIDTH);
     expect(svgCircle.props.fill).toBe(fillColor(CLEAR, BLUE));
   });
 });

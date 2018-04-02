@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Dimensions,
   Text,
-  TouchableHighlight
+  TouchableHighlight,
+  View
 } from 'react-native';
 import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
@@ -20,6 +21,8 @@ const mockStore = createMockStore(middlewares);
 describe('A Tile', () => {
   let item;
   let tileSize;
+  let expectedShapeWidth;
+  let expectedShapeHeight;
 
   beforeEach(() => {
     item = {
@@ -29,47 +32,51 @@ describe('A Tile', () => {
       quantity: 1
     };
     tileSize = Dimensions.get('window').height / 4;
+    expectedShapeWidth = tileSize / 4;
+    expectedShapeHeight = tileSize / 4;
   });
 
-  it('renders circle correctly', () => {
+  it('renders one circle correctly', () => {
     const renderer = TestRenderer.create(
       <Tile position={0} tile={item}/>
     );
     const circle = renderer.root.findByType(Circle);
-    expect(circle.props.width).toBe(50);
-    expect(circle.props.height).toBe(50);
+    expect(circle.props.width).toBe(expectedShapeWidth);
+    expect(circle.props.height).toBe(expectedShapeHeight);
     expect(circle.props.color).toBe(RED);
     expect(circle.props.fill).toBe(SOLID);
-    const text = renderer.root.findByType(Text);
-    expect(text.props.children).toEqual(1);
   });
 
-  it('renders square correctly', () => {
+  it('renders two squares correctly', () => {
     item.shape = SQUARE;
+    item.quantity = 2;
     const renderer = TestRenderer.create(
       <Tile position={0} tile={item}/>
     );
-    const square = renderer.root.findByType(Square);
-    expect(square.props.width).toBe(50);
-    expect(square.props.height).toBe(50);
-    expect(square.props.color).toBe(RED);
-    expect(square.props.fill).toBe(SOLID);
-    const text = renderer.root.findByType(Text);
-    expect(text.props.children).toEqual(1);
+    const squares = renderer.root.findAllByType(Square);
+    expect(squares).toHaveLength(2);
+    for (let x = 0; x < 2; x++) {
+      expect(squares[x].props.width).toBe(expectedShapeWidth);
+      expect(squares[x].props.height).toBe(expectedShapeHeight);
+      expect(squares[x].props.color).toBe(RED);
+      expect(squares[x].props.fill).toBe(SOLID);
+    }
   });
 
-  it('renders triangle correctly', () => {
+  it('renders three triangles correctly', () => {
     item.shape = TRIANGLE;
+    item.quantity = 3;
     const renderer = TestRenderer.create(
       <Tile position={0} tile={item}/>
     );
-    const triangle = renderer.root.findByType(Triangle);
-    expect(triangle.props.width).toBe(50);
-    expect(triangle.props.height).toBe(50);
-    expect(triangle.props.color).toBe(RED);
-    expect(triangle.props.fill).toBe(SOLID);
-    const text = renderer.root.findByType(Text);
-    expect(text.props.children).toEqual(1);
+    const triangles = renderer.root.findAllByType(Triangle);
+    expect(triangles).toHaveLength(3);
+    for (let x = 0; x < 3; x++ ) {
+      expect(triangles[x].props.width).toBe(expectedShapeWidth);
+      expect(triangles[x].props.height).toBe(expectedShapeHeight);
+      expect(triangles[x].props.color).toBe(RED);
+      expect(triangles[x].props.fill).toBe(SOLID);
+    }
   });
 
   it('renders correctly when not selected', () => {
@@ -92,13 +99,19 @@ describe('A Tile', () => {
     const renderer = TestRenderer.create(
       <Tile position={0} tile={null}/>
     );
-    const texts = renderer.root.findAllByType(Text);
-    expect(texts).toHaveLength(0);
+    const nodes = renderer.root.findAllByType(TouchableHighlight);
+    expect(nodes).toHaveLength(0);
+    const view = renderer.root.findByType(View);
+    const style = view.props.style;
+    expect(style.top).toBe(0);
+    expect(style.left).toBe(0);
+    expect(style.width).toBe(tileSize);
+    expect(style.height).toBe(tileSize);
   });
 
   it('renders tile in position 0 at top left', () => {
     const renderer = TestRenderer.create(
-      <Tile position={0} tile={null}/>
+      <Tile position={0} tile={item}/>
     );
     const node = renderer.root.findByType(TouchableHighlight);
     const style = node.props.style;
@@ -110,7 +123,7 @@ describe('A Tile', () => {
 
   it('renders tile in position 2 at bottom left', () => {
     const renderer = TestRenderer.create(
-      <Tile position={2} tile={null}/>
+      <Tile position={2} tile={item}/>
     );
     const node = renderer.root.findByType(TouchableHighlight);
     const style = node.props.style;
@@ -122,7 +135,7 @@ describe('A Tile', () => {
 
   it('renders tile in position 9 at top right', () => {
     const renderer = TestRenderer.create(
-      <Tile position={9} tile={null}/>
+      <Tile position={9} tile={item}/>
     );
     const node = renderer.root.findByType(TouchableHighlight);
     const style = node.props.style;
@@ -134,7 +147,7 @@ describe('A Tile', () => {
 
   it('renders tile in position 11 at bottom right', () => {
     const renderer = TestRenderer.create(
-      <Tile position={11} tile={null}/>
+      <Tile position={11} tile={item}/>
     );
     const node = renderer.root.findByType(TouchableHighlight);
     const style = node.props.style;
@@ -147,7 +160,7 @@ describe('A Tile', () => {
   it('calls onPress prop when pressed', () => {
     const mockFn = jest.fn();
     const renderer = TestRenderer.create(
-      <Tile position={5} tile={null} onPress={mockFn}/>
+      <Tile position={5} tile={item} onPress={mockFn}/>
     );
     const node = renderer.root.findByType(TouchableHighlight);
     node.props.onPress();

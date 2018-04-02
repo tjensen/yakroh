@@ -5,6 +5,7 @@ import {
   SOLID, HALF, CLEAR,
   fillColor
 } from '../colors';
+import { STROKE_WIDTH } from '../shapes';
 
 class Circle extends React.Component {
   render() {
@@ -21,7 +22,7 @@ class Circle extends React.Component {
           cy={50}
           r={45}
           stroke={color}
-          strokeWidth={2}
+          strokeWidth={STROKE_WIDTH}
           fill={fillColor(fill, color)}
          />
       </svg.Svg>

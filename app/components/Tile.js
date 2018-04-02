@@ -12,6 +12,33 @@ import Square from './Square';
 import Triangle from './Triangle';
 
 class Tile extends React.Component {
+  _renderShape(tile, tileSize, index) {
+    const shapeWidth = tileSize / 4;
+    const shapeHeight = tileSize / 4;
+    const props = {
+      width: shapeWidth,
+      height: shapeHeight,
+      color: tile.color,
+      fill: tile.fill,
+      key: index
+    };
+
+    switch (tile.shape) {
+      case CIRCLE:
+        return (
+          <Circle {...props} />
+        );
+      case SQUARE:
+        return (
+          <Square {...props} />
+        );
+      case TRIANGLE:
+        return (
+          <Triangle {...props} />
+        );
+    }
+  }
+
   render() {
     const tile = this.props.tile;
     const tileSize = Dimensions.get('window').height / 4;
@@ -28,7 +55,10 @@ class Tile extends React.Component {
         alignItems: 'center'
       },
       container: {
+        flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         width: tileSize - 8,
         height: tileSize - 8,
         margin: 4,
@@ -41,29 +71,25 @@ class Tile extends React.Component {
       }
     });
 
-    return (
-      <TouchableHighlight
-        style={styles.touchableHighlight}
-        onPress={this.props.onPress}
-      >
-        {tile ? (
+    if (tile) {
+      return (
+        <TouchableHighlight
+          style={styles.touchableHighlight}
+          onPress={this.props.onPress}
+        >
           <View testID={'tileContainer'} style={styles.container}>
-            {tile.shape === CIRCLE && (
-              <Circle width={50} height={50} color={tile.color} fill={tile.fill} />
-            )}
-            {tile.shape === SQUARE && (
-              <Square width={50} height={50} color={tile.color} fill={tile.fill} />
-            )}
-            {tile.shape === TRIANGLE && (
-              <Triangle width={50} height={50} color={tile.color} fill={tile.fill} />
-            )}
-            <Text style={styles.text}>{tile.quantity}</Text>
+            {tile.quantity > 0 && this._renderShape(tile, tileSize, 0)}
+            {tile.quantity > 1 && this._renderShape(tile, tileSize, 1)}
+            {tile.quantity > 2 && this._renderShape(tile, tileSize, 2)}
           </View>
-        ) : (
-          <View />
-        )}
-      </TouchableHighlight>
-    );
+        </TouchableHighlight>
+      );
+    }
+    else {
+      return (
+        <View style={styles.touchableHighlight} />
+      );
+    }
   }
 }
 

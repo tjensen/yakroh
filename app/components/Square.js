@@ -5,6 +5,7 @@ import {
   SOLID, HALF, CLEAR,
   fillColor
 } from '../colors';
+import { STROKE_WIDTH } from '../shapes';
 
 class Square extends React.Component {
   render() {
@@ -22,7 +23,7 @@ class Square extends React.Component {
           width={90}
           height={90}
           stroke={color}
-          strokeWidth={2}
+          strokeWidth={STROKE_WIDTH}
           fill={fillColor(fill, color)}
         />
       </Svg>
