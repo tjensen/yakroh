@@ -87,12 +87,13 @@ function _swapTiles(tiles, pos1, pos2) {
 
 function _compactTiles(tiles) {
   let spare = 9;
-  for (let position = 0; position < 9; position++) {
-    if (tiles[position] === null) {
-      _swapTiles(tiles, position, spare);
-      spare++;
-      if (spare > 11) {
-        return
+
+  for (let spare = 9; spare < 12; spare++) {
+    if (tiles[spare] !== null) {
+      for (let position = 0; position < 9; position++) {
+        if (tiles[position] === null) {
+          _swapTiles(tiles, position, spare);
+        }
       }
     }
   }
@@ -113,9 +114,7 @@ function selectTile(state, action) {
           placedTiles[selectedTiles[0]] = null;
           placedTiles[selectedTiles[1]] = null;
           placedTiles[selectedTiles[2]] = null;
-          _swapTiles(placedTiles, selectedTiles[0], 9);
-          _swapTiles(placedTiles, selectedTiles[1], 10);
-          _swapTiles(placedTiles, selectedTiles[2], 11);
+          _compactTiles(placedTiles);
           for (let position = 0; position < 9; position++) {
             if (placedTiles[position] === null) {
               placedTiles[position] = pendingTiles.shift();

@@ -124,23 +124,23 @@ describe('Reducer', () => {
 
         describe('and 12 tiles are placed', () => {
           beforeEach(() => {
+            initialState.selectedTiles = [9, 0];
+            initialState.placedTiles[9] = initialState.pendingTiles.shift();
             initialState.placedTiles[0] = initialState.pendingTiles.shift();
             initialState.placedTiles[1] = initialState.pendingTiles.shift();
             initialState.placedTiles[2] = initialState.pendingTiles.shift();
             initialState.placedTiles[4] = initialState.pendingTiles.shift();
             initialState.placedTiles[6] = initialState.pendingTiles.shift();
             initialState.placedTiles[8] = initialState.pendingTiles.shift();
-            initialState.placedTiles[9] = initialState.pendingTiles.shift();
             initialState.placedTiles[10] = initialState.pendingTiles.shift();
             initialState.placedTiles[11] = initialState.pendingTiles.shift();
           });
 
           it('shifts remaining tiles into first nine positions and does not deal more tiles', () => {
-            const state = reducers(initialState, selectTile(7));
+            const state = reducers(initialState, selectTile(1));
             const placedTiles = initialState.placedTiles.slice();
-            placedTiles[3] = initialState.placedTiles[9];
-            placedTiles[5] = initialState.placedTiles[10];
-            placedTiles[7] = initialState.placedTiles[11];
+            placedTiles[0] = initialState.placedTiles[10];
+            placedTiles[1] = initialState.placedTiles[11];
             placedTiles[9] = null;
             placedTiles[10] = null;
             placedTiles[11] = null;
@@ -149,9 +149,9 @@ describe('Reducer', () => {
               message: 'Yakroh!',
               score: 1,
               removedTiles: [
-                initialState.placedTiles[3],
-                initialState.placedTiles[5],
-                initialState.placedTiles[7]
+                initialState.placedTiles[9],
+                initialState.placedTiles[0],
+                initialState.placedTiles[1]
               ],
               placedTiles
             }));
