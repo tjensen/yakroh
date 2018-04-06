@@ -9,7 +9,14 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Tile from './Tile';
-import { selectTile, unselectTile, requestTiles } from '../actions';
+import {
+  dealTile,
+  requestTiles,
+  selectTile,
+  shuffle,
+  startGame,
+  unselectTile
+} from '../actions';
 
 function mapStateToProps(state) {
   return {
@@ -23,9 +30,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    dealTile: (position) => dispatch(dealTile(position)),
+    requestTiles: () => dispatch(requestTiles()),
     selectTile: (position) => dispatch(selectTile(position)),
-    unselectTile: (position) => dispatch(unselectTile(position)),
-    requestTiles: () => dispatch(requestTiles())
+    shuffle: () => dispatch(shuffle()),
+    startGame: () => dispatch(startGame()),
+    unselectTile: (position) => dispatch(unselectTile(position))
   };
 }
 
@@ -54,6 +64,14 @@ class PlayArea extends React.Component {
     );
   }
 
+  _restart() {
+    this.props.startGame();
+    this.props.shuffle();
+    for (let i = 0; i < 9; i++) {
+      this.props.dealTile(i);
+    }
+  }
+
   render() {
     const tileSize = Dimensions.get('window').height / 4;
     const innerStyle = {
@@ -78,6 +96,11 @@ class PlayArea extends React.Component {
           </View>
           <Text testID={'score'}>{this.props.score}</Text>
           <Text testID={'message'}>{this.props.message}</Text>
+          <Button
+            testID={'restart'}
+            title={'Restart'}
+            onPress={this._restart.bind(this)}
+          />
         </View>
       </View>
     );

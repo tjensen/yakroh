@@ -6,8 +6,11 @@ import PlayArea from '../../../app/components/PlayArea';
 import Tile from '../../../app/components/Tile';
 import TestRenderer from 'react-test-renderer';
 import {
+  dealTile,
   requestTiles,
   selectTile,
+  shuffle,
+  startGame,
   unselectTile
 } from '../../../app/actions';
 
@@ -80,6 +83,19 @@ describe('A PlayArea', () => {
     it('renders message correctly', () => {
       const message = renderer.root.findByProps({testID: 'message'});
       expect(message.props.children).toEqual('Message to the user');
+    });
+
+    it('renders button for starting a new game', () => {
+      const button = renderer.root.findByProps({testID: 'restart'});
+      expect(button.props.title).toBe('Restart');
+      button.props.onPress();
+      const actions = store.getActions();
+      expect(actions).toHaveLength(11);
+      expect(actions[0]).toEqual(startGame());
+      expect(actions[1]).toEqual(shuffle());
+      for (let i = 0; i < 9; i++) {
+        expect(actions[i + 2]).toEqual(dealTile(i));
+      }
     });
 
     it('dispatches SELECT_TILE when tile is pressed', () => {
