@@ -1,12 +1,5 @@
 import { combineReducers } from 'redux';
-import {
-  START_GAME,
-  SHUFFLE,
-  DEAL_TILE,
-  SELECT_TILE,
-  UNSELECT_TILE,
-  REQUEST_TILES
-} from '../actions/types';
+import * as types from '../actions/types';
 import {
   allTheSame,
   allDifferent,
@@ -43,7 +36,7 @@ const initialState = {
 
 function startGame(state, action) {
   switch (action.type) {
-    case START_GAME:
+    case types.START_GAME:
       return initialState;
     default:
       return state;
@@ -52,7 +45,7 @@ function startGame(state, action) {
 
 function shuffle(state, action) {
   switch (action.type) {
-    case SHUFFLE:
+    case types.SHUFFLE:
       let copy = state.pendingTiles.slice();
       for (let i = copy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -68,7 +61,7 @@ function shuffle(state, action) {
 
 function dealTile(state, action) {
   switch (action.type) {
-    case DEAL_TILE:
+    case types.DEAL_TILE:
       let placedTiles = state.placedTiles.slice();
       let pendingTiles = state.pendingTiles.slice();
       placedTiles[action.position] = pendingTiles.shift();
@@ -101,7 +94,7 @@ function _compactTiles(tiles) {
 
 function selectTile(state, action) {
   switch (action.type) {
-    case SELECT_TILE:
+    case types.SELECT_TILE:
       let selectedTiles = state.selectedTiles.concat(action.position);
       if (selectedTiles.length === 3) {
         if (yakroh(selectedTiles.map((position) => state.placedTiles[position]))) {
@@ -147,7 +140,7 @@ function selectTile(state, action) {
 
 function unselectTile(state, action) {
   switch (action.type) {
-    case UNSELECT_TILE:
+    case types.UNSELECT_TILE:
       let selectedTiles = state.selectedTiles.filter((item) => item != action.position);
       return Object.assign({}, state, {
         selectedTiles,
@@ -160,7 +153,7 @@ function unselectTile(state, action) {
 
 function requestTiles(state, action) {
   switch (action.type) {
-    case REQUEST_TILES:
+    case types.REQUEST_TILES:
       const placedTiles = state.placedTiles.slice();
       const pendingTiles = state.pendingTiles.slice();
       for (let position = 9; position < 12; position++) {
