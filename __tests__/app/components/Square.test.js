@@ -1,12 +1,12 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
-import { Svg, Rect } from 'react-native-svg';
+import {Svg, Rect} from 'react-native-svg';
 import {
   RED, GREEN, BLUE,
   SOLID, HALF, CLEAR,
   fillColor
 } from '../../../app/colors';
-import { STROKE_WIDTH } from '../../../app/shapes';
+import {STROKE_WIDTH} from '../../../app/shapes';
 import Square from '../../../app/components/Square';
 
 describe('A Square', () => {

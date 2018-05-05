@@ -1,12 +1,12 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
-import { Svg, Polygon } from 'react-native-svg';
+import {Svg, Polygon} from 'react-native-svg';
 import {
   RED, GREEN, BLUE,
   SOLID, HALF, CLEAR,
   fillColor
 } from '../../../app/colors';
-import { STROKE_WIDTH } from '../../../app/shapes';
+import {STROKE_WIDTH} from '../../../app/shapes';
 import Triangle from '../../../app/components/Triangle';
 
 describe('A Triangle', () => {

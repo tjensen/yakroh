@@ -1,0 +1,6 @@
+---
+extends:
+  - ustudio
+  - plugin:react/recommended
+parserOptions:
+  sourceType: module

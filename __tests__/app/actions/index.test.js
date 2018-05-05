@@ -5,7 +5,6 @@ import {
   startGame,
   shuffle,
   dealTile,
-  removeTile,
   selectTile,
   unselectTile,
   requestTiles

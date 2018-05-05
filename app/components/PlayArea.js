@@ -1,14 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Button,
   Dimensions,
-  FlatList,
   StyleSheet,
   Text,
   View
 } from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import Tile from './Tile';
 import * as actions from '../actions';
 
@@ -93,6 +93,15 @@ class PlayArea extends React.Component {
     );
   }
 }
+
+PlayArea.propTypes = {
+  selectedTiles: PropTypes.array,
+  actions: PropTypes.object,
+  placedTiles: PropTypes.array,
+  noEmptyPositions: PropTypes.bool,
+  score: PropTypes.number,
+  message: PropTypes.string
+};
 
 const styles = StyleSheet.create({
   container: {

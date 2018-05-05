@@ -1,5 +1,5 @@
 import * as types from './types';
-import { yakroh } from '../yakroh';
+import {yakroh} from '../yakroh';
 
 export function setPlacedTiles(tiles) {
   return {
@@ -106,8 +106,6 @@ function _swapTiles(tiles, pos1, pos2) {
 }
 
 function _compactTiles(tiles) {
-  let spare = 9;
-
   for (let spare = 9; spare < 12; spare++) {
     if (tiles[spare] !== null) {
       for (let position = 0; position < 9; position++) {
@@ -165,7 +163,7 @@ export function selectTile(position) {
 }
 
 export function unselectTile(position) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(removeSelectedTile(position));
     dispatch(setMessage(''));
   };

@@ -1,12 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Dimensions,
   StyleSheet,
-  Text,
   TouchableHighlight,
   View
 } from 'react-native';
-import { CIRCLE, SQUARE, TRIANGLE } from '../shapes';
+import {CIRCLE, SQUARE, TRIANGLE} from '../shapes';
 import Circle from './Circle';
 import Square from './Square';
 import Triangle from './Triangle';
@@ -63,7 +63,7 @@ class Tile extends React.Component {
         height: tileSize - 8,
         margin: 4,
         backgroundColor: '#FFF',
-        borderWidth: this.props.selected ? 5 : 1,
+        borderWidth: this.props.selected ? 5 : 1
       },
       text: {
         color: '#000',
@@ -92,5 +92,12 @@ class Tile extends React.Component {
     }
   }
 }
+
+Tile.propTypes = {
+  tile: PropTypes.object,
+  position: PropTypes.number.isRequired,
+  selected: PropTypes.bool,
+  onPress: PropTypes.func
+};
 
 export default Tile;

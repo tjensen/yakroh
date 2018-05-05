@@ -6,7 +6,7 @@ import {
   SOLID, HALF, CLEAR,
   fillColor
 } from '../../../app/colors';
-import { STROKE_WIDTH } from '../../../app/shapes';
+import {STROKE_WIDTH} from '../../../app/shapes';
 import Circle from '../../../app/components/Circle';
 
 describe('A Circle', () => {

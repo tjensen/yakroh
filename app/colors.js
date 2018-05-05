@@ -7,10 +7,10 @@ export const HALF = 'HALF';
 export const CLEAR = 'CLEAR';
 
 export function fillColor(fill, color) {
-  if (fill == SOLID) {
+  if (fill === SOLID) {
     return color;
   }
-  else if (fill == CLEAR) {
+  else if (fill === CLEAR) {
     return '#fff';
   }
   else {

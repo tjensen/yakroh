@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, FlatList } from 'react-native';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import createMockStore from 'redux-mock-store';
 import PlayArea from '../../../app/components/PlayArea';
@@ -54,7 +53,7 @@ describe('A PlayArea', () => {
         placedTiles[i] = {
           color: 'RGB'[Math.trunc(i / 9) % 3],
           shape: 'OXZ'[Math.trunc(i / 3) % 3],
-          quantity: i % 3 + 1,
+          quantity: i % 3 + 1
         };
       }
       store = mockStore({
@@ -120,14 +119,12 @@ describe('A PlayArea', () => {
     it('selects tile when tile is pressed', () => {
       const tiles = renderer.root.findAllByType(Tile);
       tiles[5].props.onPress();
-      const actions = store.getActions();
       expect(mockSelectTile).toHaveBeenCalledWith(5);
     });
 
     it('unselects tile when selected tile is pressed', () => {
       const tiles = renderer.root.findAllByType(Tile);
       tiles[6].props.onPress();
-      const actions = store.getActions();
       expect(mockUnselectTile).toHaveBeenCalledWith(6);
     });
 
@@ -145,7 +142,7 @@ describe('A PlayArea', () => {
         placedTiles[i] = {
           color: 'RGB'[Math.trunc(i / 9) % 3],
           shape: 'OXZ'[Math.trunc(i / 3) % 3],
-          quantity: i % 3 + 1,
+          quantity: i % 3 + 1
         };
       }
       store = mockStore({

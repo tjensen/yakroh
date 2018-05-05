@@ -1,10 +1,10 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import * as types from '../actions/types';
 import {
   RED, BLUE, GREEN,
   SOLID, HALF, CLEAR
 } from '../colors';
-import { CIRCLE, SQUARE, TRIANGLE } from '../shapes';
+import {CIRCLE, SQUARE, TRIANGLE} from '../shapes';
 
 function allTiles() {
   let tiles = [];

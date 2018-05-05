@@ -1,22 +1,16 @@
 import React from 'react';
 import {
   Dimensions,
-  Text,
   TouchableHighlight,
   View
 } from 'react-native';
-import { Provider } from 'react-redux';
-import createMockStore from 'redux-mock-store';
 import TestRenderer from 'react-test-renderer';
 import Tile from '../../../app/components/Tile';
-import { RED, SOLID } from '../../../app/colors';
-import { CIRCLE, SQUARE, TRIANGLE } from '../../../app/shapes';
+import {RED, SOLID} from '../../../app/colors';
+import {CIRCLE, SQUARE, TRIANGLE} from '../../../app/shapes';
 import Circle from '../../../app/components/Circle';
 import Square from '../../../app/components/Square';
 import Triangle from '../../../app/components/Triangle';
-
-const middlewares = [];
-const mockStore = createMockStore(middlewares);
 
 describe('A Tile', () => {
   let item;
@@ -71,7 +65,7 @@ describe('A Tile', () => {
     );
     const triangles = renderer.root.findAllByType(Triangle);
     expect(triangles).toHaveLength(3);
-    for (let x = 0; x < 3; x++ ) {
+    for (let x = 0; x < 3; x++) {
       expect(triangles[x].props.width).toBe(expectedShapeWidth);
       expect(triangles[x].props.height).toBe(expectedShapeHeight);
       expect(triangles[x].props.color).toBe(RED);

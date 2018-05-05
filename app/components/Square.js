@@ -1,15 +1,12 @@
 import React from 'react';
-import { Svg, Rect } from 'react-native-svg';
-import {
-  RED, GREEN, BLUE,
-  SOLID, HALF, CLEAR,
-  fillColor
-} from '../colors';
-import { STROKE_WIDTH } from '../shapes';
+import PropTypes from 'prop-types';
+import {Svg, Rect} from 'react-native-svg';
+import {fillColor} from '../colors';
+import {STROKE_WIDTH} from '../shapes';
 
 class Square extends React.Component {
   render() {
-    const { width, height, color, fill } = this.props;
+    const {width, height, color, fill} = this.props;
 
     return (
       <Svg
@@ -30,5 +27,12 @@ class Square extends React.Component {
     );
   }
 }
+
+Square.propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number,
+  color: PropTypes.string,
+  fill: PropTypes.string
+};
 
 export default Square;

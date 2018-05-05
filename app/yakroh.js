@@ -1,5 +1,5 @@
 export function allTheSame(input) {
-  return 1 === new Set(input).size;
+  return new Set(input).size === 1;
 }
 
 export function allDifferent(input) {
