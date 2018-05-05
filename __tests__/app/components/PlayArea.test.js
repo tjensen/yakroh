@@ -1,29 +1,51 @@
 import React from 'react';
 import { Button, FlatList } from 'react-native';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import createMockStore from 'redux-mock-store';
 import PlayArea from '../../../app/components/PlayArea';
 import Tile from '../../../app/components/Tile';
 import TestRenderer from 'react-test-renderer';
-import {
-  dealTile,
-  requestTiles,
-  selectTile,
-  shuffle,
-  startGame,
-  unselectTile
-} from '../../../app/actions';
+import * as actions from '../../../app/actions';
 
-const middlewares = [];
+const middlewares = [thunk];
 const mockStore = createMockStore(middlewares);
+
+function mockAction(name) {
+  return jest.spyOn(actions, name).mockImplementation(() => {
+    return {type: name};
+  });
+}
 
 describe('A PlayArea', () => {
   let placedTiles;
   let store;
   let renderer;
+  let mockRequestTiles;
+  let mockStartGame;
+  let mockShuffle;
+  let mockDealTile;
+  let mockSelectTile;
+  let mockUnselectTile;
 
   beforeEach(() => {
     placedTiles = new Array(12).fill(null);
+
+    mockRequestTiles = mockAction('requestTiles');
+    mockStartGame = mockAction('startGame');
+    mockShuffle = mockAction('shuffle');
+    mockDealTile = mockAction('dealTile');
+    mockSelectTile = mockAction('selectTile');
+    mockUnselectTile = mockAction('unselectTile');
+  });
+
+  afterEach(() => {
+    mockRequestTiles.mockRestore();
+    mockStartGame.mockRestore();
+    mockShuffle.mockRestore();
+    mockDealTile.mockRestore();
+    mockSelectTile.mockRestore();
+    mockUnselectTile.mockRestore();
   });
 
   describe('with nine placed tiles', () => {
@@ -70,9 +92,7 @@ describe('A PlayArea', () => {
       expect(button.props.title).toBe('Add More Tiles');
       expect(button.props.disabled).toBe(false);
       button.props.onPress();
-      const actions = store.getActions();
-      expect(actions).toHaveLength(1);
-      expect(actions[0]).toEqual(requestTiles());
+      expect(mockRequestTiles).toHaveBeenCalledWith();
     });
 
     it('renders score correctly', () => {
@@ -89,36 +109,33 @@ describe('A PlayArea', () => {
       const button = renderer.root.findByProps({testID: 'restart'});
       expect(button.props.title).toBe('Restart');
       button.props.onPress();
-      const actions = store.getActions();
-      expect(actions).toHaveLength(11);
-      expect(actions[0]).toEqual(startGame());
-      expect(actions[1]).toEqual(shuffle());
+      expect(mockStartGame).toHaveBeenCalledWith();
+      expect(mockShuffle).toHaveBeenCalledWith();
+      expect(mockDealTile).toHaveBeenCalledTimes(9);
       for (let i = 0; i < 9; i++) {
-        expect(actions[i + 2]).toEqual(dealTile(i));
+        expect(mockDealTile).toHaveBeenCalledWith(i);
       }
     });
 
-    it('dispatches SELECT_TILE when tile is pressed', () => {
+    it('selects tile when tile is pressed', () => {
       const tiles = renderer.root.findAllByType(Tile);
       tiles[5].props.onPress();
       const actions = store.getActions();
-      expect(actions).toHaveLength(1);
-      expect(actions[0]).toEqual(selectTile(5));
+      expect(mockSelectTile).toHaveBeenCalledWith(5);
     });
 
-    it('dispatches UNSELECT_TILE when selected tile is pressed', () => {
+    it('unselects tile when selected tile is pressed', () => {
       const tiles = renderer.root.findAllByType(Tile);
       tiles[6].props.onPress();
       const actions = store.getActions();
-      expect(actions).toHaveLength(1);
-      expect(actions[0]).toEqual(unselectTile(6));
+      expect(mockUnselectTile).toHaveBeenCalledWith(6);
     });
 
-    it('does not dispatch action when empty tile is pressed', () => {
+    it('does not select or unselect tile when empty tile is pressed', () => {
       const tiles = renderer.root.findAllByType(Tile);
       tiles[11].props.onPress();
-      const actions = store.getActions();
-      expect(actions).toHaveLength(0);
+      expect(mockSelectTile).not.toHaveBeenCalled();
+      expect(mockUnselectTile).not.toHaveBeenCalled();
     });
   });
 

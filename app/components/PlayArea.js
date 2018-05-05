@@ -8,15 +8,9 @@ import {
   View
 } from 'react-native';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Tile from './Tile';
-import {
-  dealTile,
-  requestTiles,
-  selectTile,
-  shuffle,
-  startGame,
-  unselectTile
-} from '../actions';
+import * as actions from '../actions';
 
 function mapStateToProps(state) {
   return {
@@ -29,24 +23,17 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    dealTile: (position) => dispatch(dealTile(position)),
-    requestTiles: () => dispatch(requestTiles()),
-    selectTile: (position) => dispatch(selectTile(position)),
-    shuffle: () => dispatch(shuffle()),
-    startGame: () => dispatch(startGame()),
-    unselectTile: (position) => dispatch(unselectTile(position))
-  };
+  return {actions: bindActionCreators(actions, dispatch)};
 }
 
 class PlayArea extends React.Component {
   _onPressTile(item, index) {
     if (item) {
       if (this.props.selectedTiles.indexOf(index) === -1) {
-        this.props.selectTile(index);
+        this.props.actions.selectTile(index);
       }
       else {
-        this.props.unselectTile(index);
+        this.props.actions.unselectTile(index);
       }
     }
   }
@@ -65,10 +52,10 @@ class PlayArea extends React.Component {
   }
 
   _restart() {
-    this.props.startGame();
-    this.props.shuffle();
+    this.props.actions.startGame();
+    this.props.actions.shuffle();
     for (let i = 0; i < 9; i++) {
-      this.props.dealTile(i);
+      this.props.actions.dealTile(i);
     }
   }
 
@@ -90,7 +77,7 @@ class PlayArea extends React.Component {
             <Button
               testID={'requestTiles'}
               title={'Add More Tiles'}
-              onPress={this.props.requestTiles}
+              onPress={this.props.actions.requestTiles}
               disabled={this.props.noEmptyPositions}
             />
           </View>
